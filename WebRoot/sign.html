@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="sign.js"></script>
+<script src="http://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script>
+
+
+    var data = {
+        time: Date.now() + '',
+        token: '123655',
+        username: '123',
+        password: '122'
+    };
+    var str = toQueryString(sort(data)) + '&key=192006250b4c09247ec02edce69f6a2d';
+    var result = hex_md5(str).toUpperCase();
+    console.log(result);
+    $.ajax({
+        type: "GET",
+        url: "http://zhouzhifeng.iok.la/JWT/api/sign",
+        data: data,
+        headers: {
+            "sign": result
+        },
+        success: function (result) {
+            console.log(result);
+        }
+    });
+
+    function sort(obj) {
+        var keys = [], newObj = {};
+        for (var key in obj) {
+            keys.push(key);
+        }
+        keys.sort();
+        keys.forEach(function (t) {
+            newObj[t] = obj[t];
+        });
+        return newObj;
+    }
+
+    function toQueryString(obj) {
+        var s = '';
+        for (var key in obj) {
+            s += (key + '=' + obj[key] + '&');
+        }
+        var lastIndexOf = s.lastIndexOf('&');
+        return s.slice(0, lastIndexOf);
+    }
+</script>
+</body>
+</html>
